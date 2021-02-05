@@ -14,7 +14,8 @@ namespace BattleShipMaximus
             gameFeedBackLogic.GameExplanation();
 
             var startGameButton = ReadKey();
-            string input = ReadLine();
+            var endGameButton = ReadKey();
+          //  string input = ReadLine();
 
             bool IsGameInPlay = true;
             if (startGameButton.Key == ConsoleKey.Enter)
@@ -24,6 +25,11 @@ namespace BattleShipMaximus
 
                     battleShipLogic.StartGame(battleShipLogic, gameFeedBackLogic, IsGameInPlay);
                 }
+            }
+
+            if (endGameButton.Key == ConsoleKey.Escape)
+            {
+                Environment.Exit(-1);
             }
                
            
