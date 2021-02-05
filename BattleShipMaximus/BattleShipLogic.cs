@@ -31,9 +31,8 @@ namespace BattleShipMaximus
 
         public void ShowGrid()
         {
-            Clear();
-            WriteLine("         ************************");
-            WriteLine("           Let the battle begin!");
+           // Clear();
+      
             WriteLine("         ************************");
             WriteLine();
             WriteLine("         10 + + + + + + + + + +");
@@ -49,6 +48,37 @@ namespace BattleShipMaximus
             WriteLine("          0 1 2 3 4 5 6 7 8 9 10\n");
             WriteLine();
             WriteLine("         ************************");
+        }
+
+       public void StartGame(BattleShipLogic battleShipLogic, GameFeedBackLogic gameFeedBackLogic, bool IsGameInPlay)
+        {
+            battleShipLogic.ShowGrid();
+            var Xaxis = battleShipLogic.GetPlayerXAxis();
+            var Yaxis = battleShipLogic.GetPlayerYAxis();
+
+            var IsTheShipHit = battleShipLogic.FireShot(Xaxis, Yaxis);
+
+            if (IsTheShipHit)
+            {
+                gameFeedBackLogic.YouHitTheShip(5 - battleShipLogic.HitCount);
+                battleShipLogic.SetPosition();
+            }
+            if (IsTheShipHit == false)
+            {
+                gameFeedBackLogic.YouMissedTheShip();
+                WriteLine();
+            
+            }
+
+            if (battleShipLogic.ShipIsSunk() == true)
+            {
+                gameFeedBackLogic.YouSunkTheShip();
+                IsGameInPlay = false;
+                if (IsGameInPlay == false)
+                {
+                    WriteLine("Play again? Press ENTER to play again or ESC to quit.");
+                }
+            }
         }
 
         public int GetPlayerXAxis()
