@@ -7,7 +7,7 @@ namespace BattleShipMaximus
 {
     class GameFeedBackLogic
     {
-
+      
         public void WelcomeMessage()
         {
             WriteLine("           Hey there. Welcome to the classic game of Battle Ship.");
@@ -46,6 +46,7 @@ namespace BattleShipMaximus
             WriteLine("           You have " + shotsRemaining + " shells remaining in the armory.");
             WriteLine();
             WriteLine("           You need " + hitsRemaining + " more to sink her. Fire at will");
+        
         }
 
         public void YouMissedTheShip()

@@ -111,6 +111,7 @@ namespace BattleShipMaximus
             {
                 gameFeedBackLogic.YouHitTheShip(5 - battleShipLogic.HitCount, --battleShipLogic.ShotsRemaining);
                 battleShipLogic.SetPosition();
+                StartGame( battleShipLogic,  gameFeedBackLogic, IsGameInPlay);
             }
             if (IsTheShipHit == false)
             {
