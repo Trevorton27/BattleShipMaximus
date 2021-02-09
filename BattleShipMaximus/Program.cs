@@ -20,7 +20,7 @@ namespace BattleShipMaximus
             bool IsGameInPlay = true;
             if (startGameButton.Key == ConsoleKey.Enter)
             {
-                while (IsGameInPlay)
+                while (IsGameInPlay && battleShipLogic.ShotsRemaining != 0 || battleShipLogic.HitCount != 5)
                 {
 
                     battleShipLogic.StartGame(battleShipLogic, gameFeedBackLogic, IsGameInPlay);
