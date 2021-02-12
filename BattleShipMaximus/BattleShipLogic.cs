@@ -8,9 +8,9 @@ namespace BattleShipMaximus
     class BattleShipLogic
     {
 
-        public int HitCount { get; set; }
+        public int HitCount = 4;
 
-       public int ShotsRemaining = 8;
+        public int ShotsRemaining = 8;
 
         public int X_axis { get; set; }
         public int Y_axis { get; set; }
@@ -24,8 +24,10 @@ namespace BattleShipMaximus
         public void SetPosition()
         {
             var placeBattleShip = new Random();
-            X_axis = placeBattleShip.Next(1, 10);
-            Y_axis = placeBattleShip.Next(1, 10);
+
+            X_axis = 6; //placeBattleShip.Next(1, 10);
+            Y_axis = 6; //placeBattleShip.Next(1, 10);
+
             //  Console.WriteLine("Im working");
         }
 
@@ -82,21 +84,21 @@ namespace BattleShipMaximus
         {
             // Clear();
 
-            WriteLine("         ************************");
+            WriteLine("                 *********************************");
             WriteLine();
-            WriteLine("         10 + + + + + + + + + +");
-            WriteLine("          9 + + + + + + + + + +");
-            WriteLine("          8 + + + + + + + + + +");
-            WriteLine("          7 + + + + + + + + + +");
-            WriteLine("          6 + + + + + + + + + +");
-            WriteLine("          5 + + + + + + + + + +");
-            WriteLine("          4 + + + + + + + + + +");
-            WriteLine("          3 + + + + + + + + + +");
-            WriteLine("          2 + + + + + + + + + +");
-            WriteLine("          1 + + + + + + + + + +");
-            WriteLine("          0 1 2 3 4 5 6 7 8 9 10\n");
+            WriteLine("                     10 + + + + + + + + + +");
+            WriteLine("                      9 + + + + + + + + + +");
+            WriteLine("                      8 + + + + + + + + + +");
+            WriteLine("                      7 + + + + + + + + + +");
+            WriteLine("                      6 + + + + + + + + + +");
+            WriteLine("                      5 + + + + + + + + + +");
+            WriteLine("                      4 + + + + + + + + + +");
+            WriteLine("                      3 + + + + + + + + + +");
+            WriteLine("                      2 + + + + + + + + + +");
+            WriteLine("                      1 + + + + + + + + + +");
+            WriteLine("                      0 1 2 3 4 5 6 7 8 9 10\n");
             WriteLine();
-            WriteLine("         ************************");
+            WriteLine("                 *********************************");
         }
 
         public void StartGame(BattleShipLogic battleShipLogic, GameFeedBackLogic gameFeedBackLogic, bool IsGameInPlay)
@@ -107,34 +109,39 @@ namespace BattleShipMaximus
 
             var IsTheShipHit = battleShipLogic.FireShot(Xaxis, Yaxis);
 
-            if (IsTheShipHit)
+            if (IsTheShipHit && battleShipLogic.ShipIsSunk() == false)
             {
+                Clear();
                 gameFeedBackLogic.YouHitTheShip(5 - battleShipLogic.HitCount, --battleShipLogic.ShotsRemaining);
                 battleShipLogic.SetPosition();
-                StartGame( battleShipLogic,  gameFeedBackLogic, IsGameInPlay);
+                StartGame(battleShipLogic, gameFeedBackLogic, IsGameInPlay);
             }
             if (IsTheShipHit == false)
             {
-                gameFeedBackLogic.YouMissedTheShip();
+                Clear();
+                gameFeedBackLogic.YouMissedTheShip(5 - battleShipLogic.HitCount, --battleShipLogic.ShotsRemaining);
                 WriteLine();
 
             }
 
-            if (battleShipLogic.ShipIsSunk() == true)
+            if (battleShipLogic.ShipIsSunk() == true && battleShipLogic.HitCount == 5)
             {
-                gameFeedBackLogic.YouSunkTheShip();
+                Clear();
+                gameFeedBackLogic.YouSunkTheShip(5 - battleShipLogic.HitCount, --battleShipLogic.ShotsRemaining);
                 IsGameInPlay = false;
+                var endGameButton = ReadKey();
                 if (IsGameInPlay == false)
                 {
-                    WriteLine("Play again? Press ENTER to play again or ESC to quit.");
+
+                    if (endGameButton.Key == ConsoleKey.Escape)
+                    {
+                        Environment.Exit(-1);
+                    }
+
                 }
             }
-
-
-
-
         }
     }
-       
-    }
+
+}
 
