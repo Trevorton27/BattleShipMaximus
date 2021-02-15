@@ -10,6 +10,7 @@ namespace BattleShipMaximus
 
         public void WelcomeMessage()
         {
+            WriteLine();
             WriteLine("           Hey there. Welcome to the classic game of Battle Ship.");
             WriteLine();
             WriteLine("           Press Enter to continue");
@@ -39,9 +40,11 @@ namespace BattleShipMaximus
             }
         }
 
+        
 
         public void YouHitTheShip(int hitsRemaining, int shotsRemaining)
         {
+            WriteLine();
             WriteLine("           Nice shot! Direct hit!");
 
             WriteLine("           You have " + shotsRemaining + " shells remaining in the armory.");
@@ -52,6 +55,7 @@ namespace BattleShipMaximus
 
         public void YouMissedTheShip(int hitsRemaining, int shotsRemaining)
         {
+            WriteLine();
             WriteLine("           Tough luck. She's a wily one. You missed her!");
             WriteLine();
             WriteLine("            You need to hit her " + hitsRemaining + " more times to sink her");
@@ -68,17 +72,34 @@ namespace BattleShipMaximus
             WriteLine();
             WriteLine("           The day is yours! You've won the game!");
             WriteLine();
-            WriteLine("Play again? Press ENTER to play again or ESC to quit.");
+            WriteLine("           Play again? Press ENTER to play again or ESC to quit.");
         }
 
         public void NoMoreAmmo(int hitsRemaining, int shotsRemaining)
         {
+                WriteLine();
                 WriteLine("            Hits remaining: " + hitsRemaining + " Shots remaining: " + shotsRemaining);
                 WriteLine();
                 WriteLine("           Alas! You have " + shotsRemaining + " You're out of ammo. Set a course to take us out of range!");
                 WriteLine();
                 WriteLine("                                 GAME OVER");
             
+        }
+
+        public void GameRestarted(int hitsRemaining, int shotsRemaining)
+        {
+            WriteLine();
+            WriteLine("           Excellent choice, private! Way to get back in the fight! You have " + hitsRemaining + " hits and " + shotsRemaining + "  hots remaining.");
+            WriteLine();
+            WriteLine("           Make em count, soldier!");
+            WriteLine();
+        }
+
+        public void GameEnded()
+        {
+            WriteLine();
+            WriteLine("           Thank you for your service, soldier.");
+            WriteLine();
         }
            
     }

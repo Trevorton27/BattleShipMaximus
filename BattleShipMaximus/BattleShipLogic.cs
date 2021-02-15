@@ -25,10 +25,8 @@ namespace BattleShipMaximus
         {
             var placeBattleShip = new Random();
 
-            X_axis = placeBattleShip.Next(1, 10);
-            Y_axis = placeBattleShip.Next(1, 10);
-
-            //  Console.WriteLine("Im working");
+            X_axis = 5; //placeBattleShip.Next(1, 10);
+            Y_axis = 5; //placeBattleShip.Next(1, 10);
         }
 
         public int GetPlayerXAxis()
@@ -79,10 +77,9 @@ namespace BattleShipMaximus
         }
 
 
-
+      
         public void ShowGrid()
         {
-            // Clear();
 
             WriteLine("                 *********************************");
             WriteLine();
@@ -109,6 +106,34 @@ namespace BattleShipMaximus
 
             var IsTheShipHit = battleShipLogic.FireShot(Xaxis, Yaxis);
 
+            void ReStartOrEndGame()
+            {
+                var ReStartGame = ReadKey();
+                var EndGame = ReadKey();
+
+                if (ReStartGame.Key == ConsoleKey.Enter)
+                {
+                    battleShipLogic.HitCount = 0;
+                    battleShipLogic.ShotsRemaining = 8;
+
+                    battleShipLogic.SetPosition();
+                    gameFeedBackLogic.GameRestarted(battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
+                    StartGame( battleShipLogic,  gameFeedBackLogic,  IsGameInPlay);
+                }
+
+                if (EndGame.Key == ConsoleKey.Escape)
+                {
+                    gameFeedBackLogic.GameEnded();
+                    Environment.Exit(-1);
+                }
+            }
+
+          
+            if (!IsTheShipHit && battleShipLogic.ShotsRemaining == 0)
+            {
+                gameFeedBackLogic.NoMoreAmmo(5 - battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
+                ReStartOrEndGame();
+            }
             if (IsTheShipHit && battleShipLogic.ShipIsSunk() == false)
             {
                 Clear();
@@ -116,7 +141,7 @@ namespace BattleShipMaximus
                 battleShipLogic.SetPosition();
                 StartGame(battleShipLogic, gameFeedBackLogic, IsGameInPlay);
             }
-            if (IsTheShipHit == false)
+            if (IsTheShipHit == false && battleShipLogic.ShipIsSunk() == false)
             {
                 Clear();
                 gameFeedBackLogic.YouMissedTheShip(5 - battleShipLogic.HitCount, --battleShipLogic.ShotsRemaining);
@@ -128,22 +153,10 @@ namespace BattleShipMaximus
             {
                 Clear();
                 gameFeedBackLogic.YouSunkTheShip(5 - battleShipLogic.HitCount, --battleShipLogic.ShotsRemaining);
-                IsGameInPlay = false;
-                var endGameButton = ReadKey();
-                if (IsGameInPlay == false)
-                {
 
-                    if (endGameButton.Key == ConsoleKey.Escape)
-                    {
-                        Environment.Exit(-1);
-                    }
-
-                }
+                ReStartOrEndGame();
             }
-            if (ShotsRemaining == 0)
-            {
-                gameFeedBackLogic.NoMoreAmmo(5 - battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
-            }
+           
         }
     }
 
