@@ -8,9 +8,9 @@ namespace BattleShipMaximus
     class BattleShipLogic
     {
 
-        public int HitCount = 4;
+        public int HitCount = 0;
 
-        public int ShotsRemaining = 8;
+        public int ShotsRemaining = 1;
 
         public int X_axis { get; set; }
         public int Y_axis { get; set; }
@@ -25,8 +25,8 @@ namespace BattleShipMaximus
         {
             var placeBattleShip = new Random();
 
-            X_axis = 6; //placeBattleShip.Next(1, 10);
-            Y_axis = 6; //placeBattleShip.Next(1, 10);
+            X_axis = placeBattleShip.Next(1, 10);
+            Y_axis = placeBattleShip.Next(1, 10);
 
             //  Console.WriteLine("Im working");
         }
@@ -139,6 +139,10 @@ namespace BattleShipMaximus
                     }
 
                 }
+            }
+            if (ShotsRemaining == 0)
+            {
+                gameFeedBackLogic.NoMoreAmmo(5 - battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
             }
         }
     }
