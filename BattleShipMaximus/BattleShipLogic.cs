@@ -66,7 +66,9 @@ namespace BattleShipMaximus
             if (isAHit)
             {
                 HitCount++;
-            }
+                ShotsRemaining--;
+            } else { 
+                ShotsRemaining--; }
 
             return isAHit;
         }
@@ -76,8 +78,10 @@ namespace BattleShipMaximus
             return HitCount >= 5;
         }
 
-
-      
+      public bool GameIsOver()
+        {
+            return ShotsRemaining <= 0;
+        }
         public void ShowGrid()
         {
 
@@ -105,6 +109,7 @@ namespace BattleShipMaximus
             var Yaxis = battleShipLogic.GetPlayerYAxis();
 
             var IsTheShipHit = battleShipLogic.FireShot(Xaxis, Yaxis);
+            var IsGameOver = battleShipLogic.GameIsOver();
 
             void ReStartOrEndGame()
             {
@@ -129,22 +134,26 @@ namespace BattleShipMaximus
             }
 
           
-            if (!IsTheShipHit && battleShipLogic.ShotsRemaining == 0)
+            if (!IsTheShipHit )
+            if (IsGameOver)
             {
                 gameFeedBackLogic.NoMoreAmmo(5 - battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
-                ReStartOrEndGame();
+                
+                    ReStartOrEndGame();
             }
             if (IsTheShipHit && battleShipLogic.ShipIsSunk() == false)
             {
                 Clear();
-                gameFeedBackLogic.YouHitTheShip(5 - battleShipLogic.HitCount, --battleShipLogic.ShotsRemaining);
+                
+                gameFeedBackLogic.YouHitTheShip(5 - battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
                 battleShipLogic.SetPosition();
                 StartGame(battleShipLogic, gameFeedBackLogic, IsGameInPlay);
             }
             if (IsTheShipHit == false && battleShipLogic.ShipIsSunk() == false)
             {
                 Clear();
-                gameFeedBackLogic.YouMissedTheShip(5 - battleShipLogic.HitCount, --battleShipLogic.ShotsRemaining);
+              
+                gameFeedBackLogic.YouMissedTheShip(5 - battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
                 WriteLine();
 
             }
@@ -152,7 +161,8 @@ namespace BattleShipMaximus
             if (battleShipLogic.ShipIsSunk() == true && battleShipLogic.HitCount == 5)
             {
                 Clear();
-                gameFeedBackLogic.YouSunkTheShip(5 - battleShipLogic.HitCount, --battleShipLogic.ShotsRemaining);
+              
+                gameFeedBackLogic.YouSunkTheShip(5 - battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
 
                 ReStartOrEndGame();
             }

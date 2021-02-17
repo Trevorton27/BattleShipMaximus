@@ -77,17 +77,23 @@ namespace BattleShipMaximus
 
         public void NoMoreAmmo(int hitsRemaining, int shotsRemaining)
         {
+            Clear();
                 WriteLine();
-                WriteLine("            Hits remaining: " + hitsRemaining + " Shots remaining: " + shotsRemaining);
                 WriteLine();
-                WriteLine("           Alas! You have " + shotsRemaining + " You're out of ammo. Set a course to take us out of range!");
-                WriteLine();
-                WriteLine("                                 GAME OVER");
-            
+                WriteLine("           Alas! You missed her and you have " + shotsRemaining + " shots remaining. You're out of ammo.");
+            WriteLine("                                     Set a course to take us out of range!");
+
+            WriteLine();
+                WriteLine("                                             GAME OVER");
+            WriteLine();
+            WriteLine();
+            WriteLine("                         Press ENTER to play again, if ye dare or ESC to quit.");
+
         }
 
         public void GameRestarted(int hitsRemaining, int shotsRemaining)
         {
+            Clear();
             WriteLine();
             WriteLine("           Excellent choice, private! Way to get back in the fight! You have " + hitsRemaining + " hits and " + shotsRemaining + "  hots remaining.");
             WriteLine();
