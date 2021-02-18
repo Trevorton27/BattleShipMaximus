@@ -95,7 +95,7 @@ namespace BattleShipMaximus
         {
             Clear();
             WriteLine();
-            WriteLine("           Excellent choice, private! Way to get back in the fight! You have " + hitsRemaining + " hits and " + shotsRemaining + "  hots remaining.");
+            WriteLine("           Excellent choice, private! Way to get back in the fight! You have " + hitsRemaining + " hits and " + shotsRemaining + "  s hots remaining.");
             WriteLine();
             WriteLine("           Make em count, soldier!");
             WriteLine();

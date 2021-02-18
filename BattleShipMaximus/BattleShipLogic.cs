@@ -10,7 +10,7 @@ namespace BattleShipMaximus
 
         public int HitCount = 0;
 
-        public int ShotsRemaining = 1;
+        public int ShotsRemaining = 8;
 
         public int X_axis { get; set; }
         public int Y_axis { get; set; }
@@ -104,69 +104,77 @@ namespace BattleShipMaximus
 
         public void StartGame(BattleShipLogic battleShipLogic, GameFeedBackLogic gameFeedBackLogic, bool IsGameInPlay)
         {
-            battleShipLogic.ShowGrid();
-            var Xaxis = battleShipLogic.GetPlayerXAxis();
-            var Yaxis = battleShipLogic.GetPlayerYAxis();
+            gameFeedBackLogic.WelcomeMessage();
+            gameFeedBackLogic.GameExplanation();
 
-            var IsTheShipHit = battleShipLogic.FireShot(Xaxis, Yaxis);
-            var IsGameOver = battleShipLogic.GameIsOver();
+         
+                battleShipLogic.ShowGrid();
+                var Xaxis = battleShipLogic.GetPlayerXAxis();
+                var Yaxis = battleShipLogic.GetPlayerYAxis();
 
-            void ReStartOrEndGame()
-            {
-                var ReStartGame = ReadKey();
-                var EndGame = ReadKey();
+                var IsTheShipHit = battleShipLogic.FireShot(Xaxis, Yaxis);
+                var IsGameOver = battleShipLogic.GameIsOver();
 
-                if (ReStartGame.Key == ConsoleKey.Enter)
+                void ReStartOrEndGame()
                 {
-                    battleShipLogic.HitCount = 0;
-                    battleShipLogic.ShotsRemaining = 8;
+                    var ReStartGame = ReadKey();
+                    var EndGame = ReadKey();
 
+                    if (ReStartGame.Key == ConsoleKey.Enter)
+                    {
+                        battleShipLogic.HitCount = 0;
+                        battleShipLogic.ShotsRemaining = 8;
+
+                        battleShipLogic.SetPosition();
+                        gameFeedBackLogic.GameRestarted(battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
+                        StartGame(battleShipLogic, gameFeedBackLogic, IsGameInPlay);
+                    }
+
+                    if (EndGame.Key == ConsoleKey.Escape)
+                    {
+                        gameFeedBackLogic.GameEnded();
+                        Environment.Exit(-1);
+                    }
+                }
+
+
+                if (!IsTheShipHit)
+                    if (IsGameOver)
+                    {
+                        gameFeedBackLogic.NoMoreAmmo(5 - battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
+
+                        ReStartOrEndGame();
+                    }
+                if (IsTheShipHit && battleShipLogic.ShipIsSunk() == false)
+                {
+                    Clear();
+
+                    gameFeedBackLogic.YouHitTheShip(5 - battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
                     battleShipLogic.SetPosition();
-                    gameFeedBackLogic.GameRestarted(battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
-                    StartGame( battleShipLogic,  gameFeedBackLogic,  IsGameInPlay);
+                    StartGame(battleShipLogic, gameFeedBackLogic, IsGameInPlay);
                 }
-
-                if (EndGame.Key == ConsoleKey.Escape)
+                if (IsTheShipHit == false && battleShipLogic.ShipIsSunk() == false)
                 {
-                    gameFeedBackLogic.GameEnded();
-                    Environment.Exit(-1);
+                    Clear();
+
+                    gameFeedBackLogic.YouMissedTheShip(5 - battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
+                    WriteLine();
+
                 }
-            }
 
-          
-            if (!IsTheShipHit )
-            if (IsGameOver)
-            {
-                gameFeedBackLogic.NoMoreAmmo(5 - battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
-                
+                if (battleShipLogic.ShipIsSunk() == true && battleShipLogic.HitCount == 5)
+                {
+                    Clear();
+
+                    gameFeedBackLogic.YouSunkTheShip(5 - battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
+
                     ReStartOrEndGame();
-            }
-            if (IsTheShipHit && battleShipLogic.ShipIsSunk() == false)
-            {
-                Clear();
-                
-                gameFeedBackLogic.YouHitTheShip(5 - battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
-                battleShipLogic.SetPosition();
-                StartGame(battleShipLogic, gameFeedBackLogic, IsGameInPlay);
-            }
-            if (IsTheShipHit == false && battleShipLogic.ShipIsSunk() == false)
-            {
-                Clear();
-              
-                gameFeedBackLogic.YouMissedTheShip(5 - battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
-                WriteLine();
+                }
+            
 
-            }
-
-            if (battleShipLogic.ShipIsSunk() == true && battleShipLogic.HitCount == 5)
-            {
-                Clear();
-              
-                gameFeedBackLogic.YouSunkTheShip(5 - battleShipLogic.HitCount, battleShipLogic.ShotsRemaining);
-
-                ReStartOrEndGame();
-            }
            
+
+
         }
     }
 

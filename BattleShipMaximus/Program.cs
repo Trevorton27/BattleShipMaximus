@@ -15,7 +15,6 @@ namespace BattleShipMaximus
 
             var startGameButton = ReadKey();
             var endGameButton = ReadKey();
-          //  string input = ReadLine();
 
             bool IsGameInPlay = true;
             if (startGameButton.Key == ConsoleKey.Enter)
