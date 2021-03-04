@@ -25,8 +25,8 @@ namespace BattleShipMaximus
         {
             var placeBattleShip = new Random();
 
-            X_axis = placeBattleShip.Next(1, 10);
-            Y_axis = placeBattleShip.Next(1, 10);
+            X_axis = placeBattleShip.Next(1, 11);
+            Y_axis = placeBattleShip.Next(1, 11);
         }
 
         public int GetPlayerXAxis()
@@ -85,6 +85,8 @@ namespace BattleShipMaximus
         public void ShowGrid()
         {
 
+            WriteLine();
+            WriteLine();
             WriteLine("                 *********************************");
             WriteLine();
             WriteLine("                     10 + + + + + + + + + +");

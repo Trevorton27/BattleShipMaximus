@@ -21,6 +21,7 @@ namespace BattleShipMaximus
 
             if (userInput.Key == ConsoleKey.Enter)
             {
+                Clear();
                 bool IsGameInPlay = true;
 
                 do
