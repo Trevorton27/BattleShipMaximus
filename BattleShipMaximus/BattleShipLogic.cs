@@ -25,8 +25,8 @@ namespace BattleShipMaximus
         {
             var placeBattleShip = new Random();
 
-            X_axis = 5; //placeBattleShip.Next(1, 10);
-            Y_axis = 5; //placeBattleShip.Next(1, 10);
+            X_axis = placeBattleShip.Next(1, 10);
+            Y_axis = placeBattleShip.Next(1, 10);
         }
 
         public int GetPlayerXAxis()
@@ -102,10 +102,12 @@ namespace BattleShipMaximus
             WriteLine("                 *********************************");
         }
 
+     
         public void StartGame(BattleShipLogic battleShipLogic, GameFeedBackLogic gameFeedBackLogic, bool IsGameInPlay)
-        {
-            gameFeedBackLogic.WelcomeMessage();
-            gameFeedBackLogic.GameExplanation();
+        { 
+              
+        
+        
 
          
                 battleShipLogic.ShowGrid();

@@ -10,23 +10,29 @@ namespace BattleShipMaximus
             var battleShipLogic = new BattleShipLogic();
             var gameFeedBackLogic = new GameFeedBackLogic();
 
+
+
             gameFeedBackLogic.WelcomeMessage();
             gameFeedBackLogic.GameExplanation();
 
-            var startGameButton = ReadKey();
-            var endGameButton = ReadKey();
+           var userInput = ReadKey();
 
-            bool IsGameInPlay = true;
-            if (startGameButton.Key == ConsoleKey.Enter)
+    
+
+            if (userInput.Key == ConsoleKey.Enter)
             {
-                while (IsGameInPlay && battleShipLogic.ShotsRemaining != 0 || battleShipLogic.HitCount != 5)
+                bool IsGameInPlay = true;
+
+                do
                 {
 
                     battleShipLogic.StartGame(battleShipLogic, gameFeedBackLogic, IsGameInPlay);
                 }
+                while (IsGameInPlay && battleShipLogic.ShotsRemaining != 0 || battleShipLogic.HitCount != 5);
+              
             }
 
-            if (endGameButton.Key == ConsoleKey.Escape)
+            if (userInput.Key == ConsoleKey.Escape)
             {
                 Environment.Exit(-1);
             }

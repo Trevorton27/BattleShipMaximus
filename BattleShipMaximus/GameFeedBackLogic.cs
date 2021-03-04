@@ -34,10 +34,9 @@ namespace BattleShipMaximus
                 WriteLine();
                 WriteLine("           If yes, press enter and let the battle begin!");
                 WriteLine("           Otherwise press escape to exit the program.");
-
-
-
+             
             }
+           
         }
 
         
